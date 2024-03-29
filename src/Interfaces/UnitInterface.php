@@ -8,6 +8,6 @@ namespace RhinoAfrica\UnitConversionObjects\Interfaces;
 interface UnitInterface
 {
     public function getValue(): float;
-    public function setValue(): void;
+    public function setValue(float $value): void;
     public function getUnitType(): string;
 }

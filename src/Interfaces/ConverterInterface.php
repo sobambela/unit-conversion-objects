@@ -1,7 +1,7 @@
 <?php
 namespace RhinoAfrica\UnitConversionObjects\Interfaces;
 
-use RhinoAfrica\UnitConversionObjects\Interfaces\UnitInterface;
+use RhinoAfrica\UnitConversionObjects\Units\BaseUnit;
 
 /**
  * Interface for the converter containing a method signature as follows:
@@ -9,5 +9,5 @@ use RhinoAfrica\UnitConversionObjects\Interfaces\UnitInterface;
  */
 interface ConverterInterface
 {
-    public function convert(UnitInterface $sourceUnit, string $targetUnit): UnitInterface;
+    public function convert(BaseUnit $sourceUnit, string $targetUnit): BaseUnit;
 }

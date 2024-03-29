@@ -3,6 +3,7 @@ namespace RhinoAfrica\UnitConversionObjects\Converters;
 
 use Illuminate\Http\Response;
 use RhinoAfrica\UnitConversionObjects\Interfaces\UnitInterface;
+use RhinoAfrica\UnitConversionObjects\Units\BaseUnit;
 use RhinoAfrica\UnitConversionObjects\Units\Kilometer;
 use RhinoAfrica\UnitConversionObjects\Units\Meter;
 use RhinoAfrica\UnitConversionObjects\Units\Mile;
@@ -19,10 +20,11 @@ class LengthConverter extends AbstractConverter
      * @return UnitInterface
      * @throws \Exception
      */
-    public function convert(UnitInterface $sourceUnit, string $targetUnit): UnitInterface
+    public function convert(BaseUnit $sourceUnit, string $targetUnit): BaseUnit
     {
         $sourceValue = $sourceUnit->getValue();
         $sourceType = $sourceUnit->getUnitType();
+      
         if ($sourceType !== 'length') {
             throw new \Exception("Incompatible unit type for LengthConverter.");
         }
@@ -45,7 +47,7 @@ class LengthConverter extends AbstractConverter
      * @return UnitInterface
      * @throws \Exception
      */
-    private function convertFromMeter(float $value, string $targetUnit): UnitInterface
+    private function convertFromMeter(float $value, string $targetUnit): BaseUnit
     {
         switch ($targetUnit) {
             case 'kilometer':
@@ -58,8 +60,9 @@ class LengthConverter extends AbstractConverter
                 break;
             default:
                 throw new \Exception("Unsupported target unit.",Response::HTTP_UNPROCESSABLE_ENTITY);
+                // throw new \Exception("Unsupported target unit.",404);
         }
-        $target->setValue($convertedValue);
+        $target->setValue(round($convertedValue,2));
         return $target;
     }
 
@@ -80,9 +83,10 @@ class LengthConverter extends AbstractConverter
                 $target = new Mile();
                 break;
             default:
-                throw new \Exception("Unsupported target unit.",Response::HTTP_UNPROCESSABLE_ENTITY);
+                // throw new \Exception("Unsupported target unit.",Response::HTTP_UNPROCESSABLE_ENTITY);
+                throw new \Exception("Unsupported target unit.",404);
         }
-        $target->setValue($convertedValue);
+        $target->setValue(round($convertedValue,2));
         return $target;
     }
 
@@ -103,9 +107,10 @@ class LengthConverter extends AbstractConverter
                 $target = new Kilometer();
                 break;
             default:
-                throw new \Exception("Unsupported target unit.",Response::HTTP_UNPROCESSABLE_ENTITY);
+                // throw new \Exception("Unsupported target unit.",Response::HTTP_UNPROCESSABLE_ENTITY);
+                throw new \Exception("Unsupported target unit.",404);
         }
-        $target->setValue($convertedValue);
+        $target->setValue(round($convertedValue,2));
         return $target;
     }
 }
