@@ -10,88 +10,24 @@ length (meters, kilometers, inches, feet), weight (kilograms, grams, pounds), an
 (Celsius, Fahrenheit, Kelvin). The library should be easily extendable to support new unit 
 types and units in future releases.
 
-### Package Directory Structure
-Below is an outline of the structure that provides snippets for key components. You should be
-able to fill in the details, implement the conversion logic, and write unit tests.
+### System Requirements
+1. PHP ^8.1.
 
+### Installation and Setup:
+The package has some composer depencies that need to be installed. Since the vendor folder is gitignored. Composer install will have to be run after cloning the package.
+
+1. **Clone the repo:**
 ```
-src/
-|-- Converters/
-|   |-- AbstractConverter.php
-|   |-- LengthConverter.php
-|   |-- TemperatureConverter.php
-|   |-- WeightConverter.php
-|-- Interfaces/
-|   |-- ConverterInterface.php
-|   |-- UnitInterface.php
-|-- Providers/
-|   |-- UnitConversionObjectsServiceProvider.php
-|-- Services/
-|   |-- UnitConversionService.php
-|-- Units/
-|   |-- BaseUnit.php
-|   |-- Celsius.php
-|   |-- Kilogram.php
-|   |-- Kilometer.php
-|   |-- Meter.php
-|   |-- Mile.php
-composer.json
-README.md
+$ git clone git@github.com:rasrecruits/unit-conversion-objects.git
+$ cd unit-conversion-objects
+$ composer install
 ```
-
-### Requirements:
-1. **Interfaces:**
-    - '**UnitInterface**': Common interface for all units that defines method signatures
-      for **getValue()**, **setValue(float $value)**, and **getUnitType()**.
-    - '**ConverterInterface**': Interface defining the converter with method
-      '**convert(UnitInterface $sourceUnit, string $targetUnit): UnitInterface**'.
-2. **Encapsulation:**
-    - Use private/protected properties and methods to hide the internal state and behavior
-      of the classes.
-    - Provide public methods to access functionality in a controlled way (Getters aka 
-      Accessors / Setters aka Mutators).
-3. **Abstraction:**
-    - Abstract classes or methods can be used to provide a base implementation for unit
-      handling and conversion processes.
-    - '**BaseUnit**': An abstract class implementing UnitInterface, providing basic value
-      get/set operations, leaving unit-specific implementation to child classes.
-    - '**AbstractConverter**': An abstract class that implements '**ConverterInterface**',
-      providing a template method for conversion and delegating unit-specific conversion
-      steps to child classes.
-4. **Concrete Implementations:**
-    - Concrete unit classes for each supported unit, e.g., '**Meter**','**Kilogram**',
-      '**Celsius**', extending '**BaseUnit**'.
-    - Concrete converter classes for each conversion strategy, e.g., '**LengthConverter**', '**TemperatureConverter**',
-      extending '**AbstractConverter**'.
-5. **Extensibility:**
-    - The design should allow easy addition of new units and conversion strategies without
-      modifying existing code.
-6. **Error Handling:**
-    - Proper exception handling for scenarios like unsupported units, invalid values, and 
-      conversion errors.
-7. **Unit Tests:**
-    - Write unit tests for each component ensuring that individual parts work as expected
-      independently.
-8. **Documentation:**
-    - Provide clear documentation on how to use the library and extend it with new units or 
-      converters.
-
-This framework sets up the basic structure and components. You are required to implement the
-specifics of unit handling and conversion, write unit tests, and provide clear documentation.
-This will provide a comprehensive assessment of your ability to apply OOP principals effectively
-in PHP, showcasing your skill in using interfaces, encapsulation, and abstraction to build a 
-modular, maintainable, and extensible system. Any required time constraints (if provided) will
-also test your ability to implement solutions efficiently.
-
-### Expected Deliverables:
-
-1. **Code:**
-    - A PHP library fulfilling requirements as outlined above.
-    - Clear, readable, and maintainable code with proper use of OOP principles.
 2. **Tests:**
-    - Comprehensive unit tests covering the major functionalities.
-3. **Documentation:**
-   - A README file documenting how to use the library, extend it, and run the tests.
+Unit tests covering the major functionalities are located in the ./tests folder. These test all the available Converters and the Unit Conversion Service. There are 13 tests with 33 assertions. The command below will run through all the tests.
+```
+$ cd cd unit-conversion-objects
+$ ./vendor/bin/phpunit tests
+```
 
 ### Usage Examples:
 The examples below demonstrate how to use the library. The first two examples demonstrates

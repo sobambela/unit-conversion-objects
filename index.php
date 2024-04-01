@@ -1,6 +1,7 @@
 <?php
 require './vendor/autoload.php';
 
+use RhinoAfrica\UnitConversionObjects\Services\UnitConversionService;
 use RhinoAfrica\UnitConversionObjects\Units\Meter;
 use RhinoAfrica\UnitConversionObjects\Converters\LengthConverter;
 use RhinoAfrica\UnitConversionObjects\Converters\TemperatureConverter;
@@ -158,3 +159,34 @@ echo $gram->getValue() . ' grams' . "<br>"; // Outputs the converted value
 $kilogram = $weightConverter->convert($pound, 'kilogram');
 echo $kilogram->getValue() . ' kilograms' . "<br>"; // Outputs the converted value
 /* END Pound convertions */
+
+echo 'Using the Service Object <br>';
+// Initialize the Service Object
+$service = new UnitConversionService();
+$service->setSourceUnit('kilometer',1);
+
+// Convert from Kilometers to Miles
+$targetUnit = $service->convert('meter');
+echo $targetUnit->getValue() . ' meters <br>';
+
+$targetUnit = $service->convert('mile');
+echo $targetUnit->getValue() . ' miles  <br>';
+
+
+$service->setSourceUnit('kilogram',1);
+
+// Convert from Kilometers to Miles
+$targetUnit = $service->convert('gram');
+echo $targetUnit->getValue() . ' grams <br>';
+
+$targetUnit = $service->convert('pound');
+echo $targetUnit->getValue() . ' pounds  <br>';
+
+$service->setSourceUnit('celsius',100);
+
+$targetUnit = $service->convert('kelvin');
+echo $targetUnit->getValue() . ' kelvin  <br>';
+
+$targetUnit = $service->convert('fahrenheit');
+echo $targetUnit->getValue() . ' fahrenheit  <br>';
+
