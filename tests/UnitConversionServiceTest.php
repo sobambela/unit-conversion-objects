@@ -13,7 +13,7 @@ final class UnitConversionServiceTest extends TestCase
         // Initialize the Service Object
         $service = new UnitConversionService();
 
-        // Length Convertions
+        // Length Conversions
         $service->setSourceUnit('kilometer',1);
 
         // Convert from Kilometers to Meters
@@ -24,7 +24,7 @@ final class UnitConversionServiceTest extends TestCase
         $targetUnit = $service->convert('mile');
         $this->assertSame(0.62, $targetUnit->getValue());
 
-        // Weight Convertions
+        // Weight Conversions
         $service->setSourceUnit('kilogram',1);
 
         // Convert from Kilograms to Grams
@@ -35,7 +35,7 @@ final class UnitConversionServiceTest extends TestCase
         $targetUnit = $service->convert('pound');
         $this->assertSame(2.21, $targetUnit->getValue());
 
-        // Temperature Convertions
+        // Temperature Conversions
         $service->setSourceUnit('celsius',100);
 
         // Convert from Celsius to Kelvin

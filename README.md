@@ -92,82 +92,69 @@ echo $targetUnit->getValue() . ' miles'; // Outputs the converted value in miles
 
 The design allows for easy extension, so you can add more units and conversion logic as needed.
 
-Ensure that your code is intuitive and well-documented so that others can easily 
-understand how to use it and add their own types of conversions if necessary.
+### Extending the Package (Adding more units):
 
-### Notes:
+1. **Adding a Unit file**: Below is an example of a Unit file that is needed when adding a new Unit to convert. Add a file **./src/Units/UnitName.php**
 
-1. **Unit Consistency**: The converter checks if the source unit type is compatible
-   with conversion tyoe requested.
-2. **Extensibility**: You can add more case statements to each method to support 
-   more units.
-3. **Error Handling**: The converter throws exceptions if the source unit or target 
-   unit is not supported.
-4. **Unit Classes**: This example assumes that you have Meter, Kilometer, and Mile 
-   classes that extend BaseUnit.
+```
+<?php 
+namespace RhinoAfrica\UnitConversionObjects\Units;
 
-This structure ensures that adding a new unit conversion, like feet to meters, would
-only require you to add a new case in the relevant methods and ensure that a
-corresponding unit class exists. This design aligns with the principles of OOP, 
-promoting extensibility and maintainability.
+use RhinoAfrica\UnitConversionObjects\Units\BaseUnit;
 
-### Use Initiative
+class UnitName extends BaseUnit
+{
+    public function __construct()
+    {   
+        // Unit type definition 
+        $this->unitType = 'temperature';
+    }
+}
+```
 
-There's no need to follow all the same methodologies and functionality currently available
-in this package. It's by no means perfect, but it's also not perfect for good reason. If you
-truly understand the inner workings of this package, you should also have a good idea of how
-to improve it. If you use initiative and make improvements to current functional flow, it
-would be of incredible benefit for the outcome of the completed asssesment.
-
-### Support
-While we hope you are in the position to face a challenge and to figure things out when they
-don't work according to how you would expect, we understand that tasks like these can take 
-time. If you struggle with installation, setup or anything in documentation is confusing you,
-please feel free to reach out at us directly at quintin@rhinoafrica.com. I will be happy to
-assist to keep you moving.
-
-### Hints / Converter Example
-
-The following code can be used as reference for Converter Functionality
-
+Follwing this, a Converter class needs to accompany the new unit file. This is done by adding **./src/Converters/UnitNameConverter.php** that has the following structure:
 ```
 <?php
 namespace RhinoAfrica\UnitConversionObjects\Converters;
 
 use Illuminate\Http\Response;
 use RhinoAfrica\UnitConversionObjects\Interfaces\UnitInterface;
-use RhinoAfrica\UnitConversionObjects\Units\Kilometer;
-use RhinoAfrica\UnitConversionObjects\Units\Meter;
-use RhinoAfrica\UnitConversionObjects\Units\Mile;
+use RhinoAfrica\UnitConversionObjects\Units\BaseUnit;
+use RhinoAfrica\UnitConversionObjects\Units\Celsius;
+use RhinoAfrica\UnitConversionObjects\Units\Kelvin;
+use RhinoAfrica\UnitConversionObjects\Units\Fahrenheit;
+use RhinoAfrica\UnitConversionObjects\Units\UnitName;
 
 /**
- * Conversion Strategy Class for Lenth conversion units, extending AbstractConverter
+ * Conversion Strategy Class for Temperture conversion units, extending AbstractConverter
  */
-class LengthConverter
-    extends AbstractConverter
+class UnitNameConverter extends AbstractConverter
 {
 
     /**
-     * @param UnitInterface $sourceUnit
+     * @param BaseUnit $sourceUnit
      * @param string $targetUnit
-     * @return UnitInterface
+     * @return BaseUnit
      * @throws \Exception
      */
-    public function convert(UnitInterface $sourceUnit, string $targetUnit): UnitInterface
+    public function convert(BaseUnit $sourceUnit, string $targetUnit): BaseUnit
     {
         $sourceValue = $sourceUnit->getValue();
         $sourceType = $sourceUnit->getUnitType();
-        if ($sourceType !== 'length') {
-            throw new \Exception("Incompatible unit type for LengthConverter.");
+      
+        if ($sourceType !== 'temperature') {
+            throw new \Exception("Incompatible unit type for TemperatureConverter.");
         }
 
         switch ($sourceUnit::class) {
-            case Meter::class:
-                return $this->convertFromMeter($sourceValue, $targetUnit);
-            case Kilometer::class:
-                return $this->convertFromKilometer($sourceValue, $targetUnit);
-            case Mile::class:
-                return $this->convertFromMile($sourceValue, $targetUnit);
+            case Celsius::class:
+                return $this->convertFromCelsius($sourceValue, $targetUnit);
+            case Kelvin::class:
+                return $this->convertFromKelvin($sourceValue, $targetUnit);
+            case Fahrenheit::class:
+                return $this->convertFromFahrenheit($sourceValue, $targetUnit);
+            case UnitName::class:
+                return $this->convertFromUnitName($sourceValue, $targetUnit);
             default:
                 throw new \Exception("Unsupported source unit.");
         }
@@ -176,71 +163,104 @@ class LengthConverter
     /**
      * @param float $value
      * @param string $targetUnit
-     * @return UnitInterface
+     * @return BaseUnit
      * @throws \Exception
      */
-    private function convertFromMeter(float $value, string $targetUnit): UnitInterface
+    private function convertFromCelsius(float $value, string $targetUnit): BaseUnit
     {
         switch ($targetUnit) {
-            case 'kilometer':
-                $convertedValue = $value / 1000;
-                $target = new Kilometer();
+            case 'celsius':
+                $convertedValue = $value + 273.15;
+                $target = new Celsius();
                 break;
-            case 'mile':
-                $convertedValue = $value / 1609.34;
-                $target = new Mile();
+            case 'kelvin':
+                $convertedValue = $value + 273.15;
+                $target = new Kelvin();
+                break;
+            case 'fahrenheit':
+                $convertedValue = ($value * (9/5)) + 32;
+                $target = new Kelvin();
                 break;
             default:
                 throw new \Exception("Unsupported target unit.",Response::HTTP_UNPROCESSABLE_ENTITY);
+                // throw new \Exception("Unsupported target unit.",404);
         }
-        $target->setValue($convertedValue);
+        $target->setValue(round($convertedValue,2));
         return $target;
     }
 
     /**
      * @param float $value
      * @param string $targetUnit
-     * @return UnitInterface
+     * @return BaseUnit
      * @throws \Exception
      */
-    private function convertFromKilometer(float $value, string $targetUnit): UnitInterface {
+    private function convertFromKelvin(float $value, string $targetUnit): BaseUnit 
+    {
         switch ($targetUnit) {
-            case 'meter':
-                $convertedValue = $value * 1000;
-                $target = new Meter();
+            case 'celsius':
+                $convertedValue = $value - 273.15;
+                $target = new Celsius();
                 break;
-            case 'mile':
-                $convertedValue = $value / 1.60934;
-                $target = new Mile();
+            case 'fahrenheit':
+                $convertedValue = (($value - 273.15) * (9/5)) + 32;
+                $target = new Kelvin();
                 break;
             default:
                 throw new \Exception("Unsupported target unit.",Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-        $target->setValue($convertedValue);
+        $target->setValue(round($convertedValue,2));
         return $target;
     }
 
     /**
      * @param float $value
      * @param string $targetUnit
-     * @return UnitInterface
+     * @return BaseUnit
      * @throws \Exception
      */
-    private function convertFromMile(float $value, string $targetUnit): UnitInterface {
+    private function convertFromFahrenheit(float $value, string $targetUnit): BaseUnit 
+    {
         switch ($targetUnit) {
-            case 'meter':
-                $convertedValue = $value * 1609.34;
-                $target = new Meter();
+            case 'celsius':
+                $convertedValue = ($value - 32) * 5/9;
+                $target = new Celsius();
                 break;
-            case 'kilometer':
-                $convertedValue = $value * 1.60934;
-                $target = new Kilometer();
+            case 'kelvin':
+                $convertedValue = (($value -  32) * (5/9)) + 273.15 ;
+                $target = new Kelvin();
                 break;
             default:
-                throw new \Exception("Unsupported target unit.",Response::HTTP_UNPROCESSABLE_ENTITY);
+                // throw new \Exception("Unsupported target unit.",Response::HTTP_UNPROCESSABLE_ENTITY);
+                throw new \Exception("Unsupported target unit.",404);
         }
-        $target->setValue($convertedValue);
+        $target->setValue(round($convertedValue,2));
+        return $target;
+    }
+
+    /*
+    * @param float $value
+     * @param string $targetUnit
+     * @return BaseUnit
+     * @throws \Exception
+     */
+    private function convertFromUnitName(float $value, string $targetUnit): BaseUnit 
+    {
+        switch ($targetUnit) {
+            case 'new-temperature-unit':
+                $convertedValue = (($value -  32) * (5/9)) + 273.15 ;
+                $target = new UnitName();
+                break;
+            default:
+                // throw new \Exception("Unsupported target unit.",Response::HTTP_UNPROCESSABLE_ENTITY);
+                throw new \Exception("Unsupported target unit.",404);
+        }
+        $target->setValue(round($convertedValue,2));
         return $target;
     }
 }
 ```
+The above is an example of adding a new Unit of Temperature called UnitName. 
+1. UnitName must first be imported. 
+2. Extend the switch statement to include this UnitName
+3. Create an acompanying convertFromUnitName function to handle the conversions.
