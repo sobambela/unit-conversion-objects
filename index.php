@@ -4,9 +4,13 @@ require './vendor/autoload.php';
 use RhinoAfrica\UnitConversionObjects\Units\Meter;
 use RhinoAfrica\UnitConversionObjects\Converters\LengthConverter;
 use RhinoAfrica\UnitConversionObjects\Converters\TemperatureConverter;
+use RhinoAfrica\UnitConversionObjects\Converters\WeightConverter;
 use RhinoAfrica\UnitConversionObjects\Units\Celsius;
 use RhinoAfrica\UnitConversionObjects\Units\Kelvin;
 use RhinoAfrica\UnitConversionObjects\Units\Fahrenheit;
+use RhinoAfrica\UnitConversionObjects\Units\Kilogram;
+use RhinoAfrica\UnitConversionObjects\Units\Gram;
+use RhinoAfrica\UnitConversionObjects\Units\Pound;
 use RhinoAfrica\UnitConversionObjects\Units\Kilometer;
 use RhinoAfrica\UnitConversionObjects\Units\Mile;
 
@@ -50,14 +54,14 @@ $mile->setValue(621.37); // Set 500 meters
 // Initialize the converter
 $lengthConverter = new LengthConverter();
 
-// Convert from KiloMeter to Meter
+// Convert from Mile to Meter
 $meter = $lengthConverter->convert($mile, 'meter');
 echo $meter->getValue() . ' meters' . "<br>"; // Outputs the converted value
 
-// Convert from Meter to Kilometer
+// Convert from Mile to Kilometer
 $kilometer = $lengthConverter->convert($mile, 'kilometer');
 echo $kilometer->getValue() . ' kilometers' . "<br>"; // Outputs the converted value
-/* END Kilometer convertions */
+/* END Mile convertions */
 
 echo "Tempertures <br>";
 /** Celsius convertions **/
@@ -75,7 +79,7 @@ echo $kelvin->getValue() . ' Kelvin' . "<br>"; // Outputs the converted value
 $fahrenheit = $tempConverter->convert($celsius, 'fahrenheit');
 echo $fahrenheit->getValue() . ' Fahrenheit' . "<br>"; // Outputs the converted value
 
-/** Celsius convertions **/
+/** Kelvin convertions **/
 // Initialize the source unit
 $kelvin = new Kelvin();
 $kelvin->setValue(5); 
@@ -89,7 +93,7 @@ echo $celsius->getValue() . ' celsius' . "<br>"; // Outputs the converted value
 // Convert from Kelvin to Fahrenheit
 $fahrenheit = $tempConverter->convert($kelvin, 'fahrenheit');
 echo $fahrenheit->getValue() . ' fahrenheit' . "<br>"; // Outputs the converted value
-/* END Kilometer convertions */
+/* END Kelvin convertions */
 
 /** Fahrenheit convertions **/
 // Initialize the source unit
@@ -105,4 +109,52 @@ echo $celsius->getValue() . ' celsius' . "<br>"; // Outputs the converted value
 // Convert from Fahrenheit to Kelvin
 $kelvin = $tempConverter->convert($fahrenheit, 'kelvin');
 echo $kelvin->getValue() . ' kelvin' . "<br>"; // Outputs the converted value
-/* END Kilometer convertions */
+/* END Fahrenheit convertions */
+
+/** Kilogram convertions **/
+// Initialize the source unit
+$kilogram = new Kilogram();
+$kilogram->setValue(5); 
+// Initialize the converter
+$weightConverter = new WeightConverter();
+
+// Convert from Kilogram to Gram
+$kilogram = $weightConverter->convert($kilogram, 'gram');
+echo $kilogram->getValue() . ' grams' . "<br>"; // Outputs the converted value
+
+// Convert from Kilogram to Pounds
+$pound = $weightConverter->convert($kilogram, 'pound');
+echo $pound->getValue() . ' pound' . "<br>"; // Outputs the converted value
+/* END Kilogram convertions */
+
+/** Gram convertions **/
+// Initialize the source unit
+$gram = new Gram();
+$gram->setValue(5); 
+// Initialize the converter
+$weightConverter = new WeightConverter();
+
+// Convert from Kilogram to Gram
+$kilogram = $weightConverter->convert($gram, 'kilogram');
+echo $kilogram->getValue() . ' grams' . "<br>"; // Outputs the converted value
+
+// Convert from Kilogram to Pounds
+$pound = $weightConverter->convert($gram, 'pound');
+echo $pound->getValue() . ' pound' . "<br>"; // Outputs the converted value
+/* END Gram convertions */
+
+/** Pound convertions **/
+// Initialize the source unit
+$pound = new Pound();
+$pound->setValue(5); 
+// Initialize the converter
+$weightConverter = new WeightConverter();
+
+// Convert from Pound to Gram
+$gram = $weightConverter->convert($pound, 'gram');
+echo $gram->getValue() . ' grams' . "<br>"; // Outputs the converted value
+
+// Convert from Pounds to Kilograms
+$kilogram = $weightConverter->convert($pound, 'kilogram');
+echo $kilogram->getValue() . ' kilograms' . "<br>"; // Outputs the converted value
+/* END Pound convertions */

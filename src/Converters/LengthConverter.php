@@ -15,9 +15,9 @@ class LengthConverter extends AbstractConverter
 {
 
     /**
-     * @param UnitInterface $sourceUnit
+     * @param BaseUnit $sourceUnit
      * @param string $targetUnit
-     * @return UnitInterface
+     * @return BaseUnit
      * @throws \Exception
      */
     public function convert(BaseUnit $sourceUnit, string $targetUnit): BaseUnit
@@ -44,7 +44,7 @@ class LengthConverter extends AbstractConverter
     /**
      * @param float $value
      * @param string $targetUnit
-     * @return UnitInterface
+     * @return BaseUnit
      * @throws \Exception
      */
     private function convertFromMeter(float $value, string $targetUnit): BaseUnit
@@ -69,10 +69,11 @@ class LengthConverter extends AbstractConverter
     /**
      * @param float $value
      * @param string $targetUnit
-     * @return UnitInterface
+     * @return BaseUnit
      * @throws \Exception
      */
-    private function convertFromKilometer(float $value, string $targetUnit): UnitInterface {
+    private function convertFromKilometer(float $value, string $targetUnit): BaseUnit 
+    {
         switch ($targetUnit) {
             case 'meter':
                 $convertedValue = $value * 1000;
@@ -93,10 +94,11 @@ class LengthConverter extends AbstractConverter
     /**
      * @param float $value
      * @param string $targetUnit
-     * @return UnitInterface
+     * @return BaseUnit
      * @throws \Exception
      */
-    private function convertFromMile(float $value, string $targetUnit): UnitInterface {
+    private function convertFromMile(float $value, string $targetUnit): BaseUnit 
+    {
         switch ($targetUnit) {
             case 'meter':
                 $convertedValue = $value * 1609.34;

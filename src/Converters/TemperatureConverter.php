@@ -15,9 +15,9 @@ class TemperatureConverter extends AbstractConverter
 {
 
     /**
-     * @param UnitInterface $sourceUnit
+     * @param BaseUnit $sourceUnit
      * @param string $targetUnit
-     * @return UnitInterface
+     * @return BaseUnit
      * @throws \Exception
      */
     public function convert(BaseUnit $sourceUnit, string $targetUnit): BaseUnit
@@ -44,7 +44,7 @@ class TemperatureConverter extends AbstractConverter
     /**
      * @param float $value
      * @param string $targetUnit
-     * @return UnitInterface
+     * @return BaseUnit
      * @throws \Exception
      */
     private function convertFromCelsius(float $value, string $targetUnit): BaseUnit
@@ -73,10 +73,11 @@ class TemperatureConverter extends AbstractConverter
     /**
      * @param float $value
      * @param string $targetUnit
-     * @return UnitInterface
+     * @return BaseUnit
      * @throws \Exception
      */
-    private function convertFromKelvin(float $value, string $targetUnit): UnitInterface {
+    private function convertFromKelvin(float $value, string $targetUnit): BaseUnit 
+    {
         switch ($targetUnit) {
             case 'celsius':
                 $convertedValue = $value - 273.15;
@@ -96,10 +97,11 @@ class TemperatureConverter extends AbstractConverter
     /**
      * @param float $value
      * @param string $targetUnit
-     * @return UnitInterface
+     * @return BaseUnit
      * @throws \Exception
      */
-    private function convertFromFahrenheit(float $value, string $targetUnit): UnitInterface {
+    private function convertFromFahrenheit(float $value, string $targetUnit): BaseUnit 
+    {
         switch ($targetUnit) {
             case 'celsius':
                 $convertedValue = ($value - 32) * 5/9;
