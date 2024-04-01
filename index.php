@@ -3,6 +3,10 @@ require './vendor/autoload.php';
 
 use RhinoAfrica\UnitConversionObjects\Units\Meter;
 use RhinoAfrica\UnitConversionObjects\Converters\LengthConverter;
+use RhinoAfrica\UnitConversionObjects\Converters\TemperatureConverter;
+use RhinoAfrica\UnitConversionObjects\Units\Celsius;
+use RhinoAfrica\UnitConversionObjects\Units\Kelvin;
+use RhinoAfrica\UnitConversionObjects\Units\Fahrenheit;
 use RhinoAfrica\UnitConversionObjects\Units\Kilometer;
 use RhinoAfrica\UnitConversionObjects\Units\Mile;
 
@@ -16,11 +20,11 @@ $lengthConverter = new LengthConverter();
 
 // Convert from Meter to Kilometer
 $kilometer = $lengthConverter->convert($meter, 'kilometer');
-echo $kilometer->getValue() . ' kilometers' . "<br>"; // Outputs the converted value in kilometers
+echo $kilometer->getValue() . ' kilometers' . "<br>"; // Outputs the converted value
 
 // Convert from Meter to Mile
 $mile = $lengthConverter->convert($meter, 'mile');
-echo $mile->getValue() . ' miles' . "<br>"; // Outputs the converted value in kilometers
+echo $mile->getValue() . ' miles' . "<br>"; // Outputs the converted value
 /* END Meter Convertions */
 
 /** Kilometer convertions **/
@@ -32,11 +36,11 @@ $lengthConverter = new LengthConverter();
 
 // Convert from KiloMeter to Meter
 $meter = $lengthConverter->convert($kilometer, 'meter');
-echo $meter->getValue() . ' meters' . "<br>"; // Outputs the converted value in kilometers
+echo $meter->getValue() . ' meters' . "<br>"; // Outputs the converted value
 
 // Convert from Meter to Kilometer
 $mile = $lengthConverter->convert($kilometer, 'mile');
-echo $mile->getValue() . ' miles' . "<br>"; // Outputs the converted value in kilometers
+echo $mile->getValue() . ' miles' . "<br>"; // Outputs the converted value
 /* END Kilometer convertions */
 
 /** Mile convertions **/
@@ -48,9 +52,57 @@ $lengthConverter = new LengthConverter();
 
 // Convert from KiloMeter to Meter
 $meter = $lengthConverter->convert($mile, 'meter');
-echo $meter->getValue() . ' meters' . "<br>"; // Outputs the converted value in kilometers
+echo $meter->getValue() . ' meters' . "<br>"; // Outputs the converted value
 
 // Convert from Meter to Kilometer
 $kilometer = $lengthConverter->convert($mile, 'kilometer');
-echo $kilometer->getValue() . ' kilometers' . "<br>"; // Outputs the converted value in kilometers
+echo $kilometer->getValue() . ' kilometers' . "<br>"; // Outputs the converted value
+/* END Kilometer convertions */
+
+echo "Tempertures <br>";
+/** Celsius convertions **/
+// Initialize the source unit
+$celsius = new Celsius();
+$celsius->setValue(5); 
+// Initialize the converter
+$tempConverter = new TemperatureConverter();
+
+// Convert from Celsius to Kelvin
+$kelvin = $tempConverter->convert($celsius, 'kelvin');
+echo $kelvin->getValue() . ' Kelvin' . "<br>"; // Outputs the converted value
+
+// Convert from Celsius to Fahrenheit
+$fahrenheit = $tempConverter->convert($celsius, 'fahrenheit');
+echo $fahrenheit->getValue() . ' Fahrenheit' . "<br>"; // Outputs the converted value
+
+/** Celsius convertions **/
+// Initialize the source unit
+$kelvin = new Kelvin();
+$kelvin->setValue(5); 
+// Initialize the converter
+$tempConverter = new TemperatureConverter();
+
+// Convert from Kelvin to Celsius
+$celsius = $tempConverter->convert($kelvin, 'celsius');
+echo $celsius->getValue() . ' celsius' . "<br>"; // Outputs the converted value
+
+// Convert from Kelvin to Fahrenheit
+$fahrenheit = $tempConverter->convert($kelvin, 'fahrenheit');
+echo $fahrenheit->getValue() . ' fahrenheit' . "<br>"; // Outputs the converted value
+/* END Kilometer convertions */
+
+/** Fahrenheit convertions **/
+// Initialize the source unit
+$fahrenheit = new Fahrenheit();
+$fahrenheit->setValue(5); 
+// Initialize the converter
+$tempConverter = new TemperatureConverter();
+
+// Convert from Fahrenheit to Celsius
+$celsius = $tempConverter->convert($fahrenheit, 'celsius');
+echo $celsius->getValue() . ' celsius' . "<br>"; // Outputs the converted value
+
+// Convert from Fahrenheit to Kelvin
+$kelvin = $tempConverter->convert($fahrenheit, 'kelvin');
+echo $kelvin->getValue() . ' kelvin' . "<br>"; // Outputs the converted value
 /* END Kilometer convertions */
