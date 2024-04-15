@@ -18,7 +18,7 @@ The package has some composer depencies that need to be installed. Since the ven
 
 1. **Clone the repo:**
 ```
-$ git clone git@github.com:sobambela/unit-conversion-objects.git
+$ git clone https://github.com/sobambela/unit-conversion-objects.git
 $ cd unit-conversion-objects
 $ composer install
 ```
